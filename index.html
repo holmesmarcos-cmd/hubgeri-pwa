@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Hub GERI HSE</title>
+<meta name="description" content="Acesso rápido às ferramentas da Geriatria — Hospital dos Servidores do Estado de Pernambuco">
+
+<!-- ── PWA / Standalone ── -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hub GERI">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1b5c35">
+<meta name="application-name" content="Hub GERI HSE">
+
+<!-- ── Icons ── -->
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="manifest" href="manifest.webmanifest">
+
+<!-- ── Open Graph (preview no WhatsApp etc.) ── -->
+<meta property="og:title" content="Hub GERI HSE">
+<meta property="og:description" content="Acesso rápido às ferramentas da Geriatria — HSE/IASSEPE">
+<meta property="og:image" content="icon-512.png">
+<meta property="og:type" content="website">
+
+<style>
+:root { --forest: #1b5c35; }
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body {
+  height: 100%; width: 100%;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--forest) 0%, #2a7a4a 60%, #235f3e 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "DM Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  color: #fff;
+}
+.wrap {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+.logo {
+  width: 110px; height: 110px;
+  border-radius: 24px;
+  box-shadow: 0 14px 38px rgba(0,0,0,.36), 0 4px 10px rgba(0,0,0,.22);
+  animation: fadeUp .55s ease-out both;
+}
+h1 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 26px;
+  font-weight: normal;
+  letter-spacing: .3px;
+  margin: 26px 0 6px;
+  animation: fadeUp .55s ease-out .08s both;
+}
+.subtitle {
+  color: rgba(255,255,255,.65);
+  font-size: 11.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 36px;
+  animation: fadeUp .55s ease-out .16s both;
+}
+.status {
+  display: flex; align-items: center; gap: 11px;
+  color: rgba(255,255,255,.85);
+  font-size: 14px;
+  animation: fadeUp .55s ease-out .24s both;
+}
+.spinner {
+  width: 20px; height: 20px;
+  border: 2.3px solid rgba(255,255,255,.22);
+  border-top-color: rgba(255,255,255,.95);
+  border-radius: 50%;
+  animation: spin .9s linear infinite;
+  flex-shrink: 0;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  margin-top: 28px;
+  padding: 14px 26px;
+  background: #fff;
+  color: var(--forest);
+  border-radius: 30px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 10px 28px rgba(0,0,0,.28), 0 3px 8px rgba(0,0,0,.14);
+  animation: fadeUp .55s ease-out .32s both;
+  transition: transform .12s ease, background .15s ease;
+}
+.btn:active { transform: scale(.96); background: #f4f8f5; }
+.btn svg { stroke: var(--forest); }
+.foot {
+  position: absolute; bottom: 22px; left: 0; right: 0;
+  text-align: center;
+  font-size: 10.5px;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.42);
+  text-transform: uppercase;
+  padding: 0 18px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <img class="logo" src="icon-192.png" alt="Hub GERI HSE">
+  <h1>Hub GERI HSE</h1>
+  <div class="subtitle">Hospital dos Servidores · IASSEPE</div>
+
+  <div class="status" id="status">
+    <div class="spinner"></div>
+    <span>Abrindo Hub…</span>
+  </div>
+
+  <a class="btn" id="open-btn" href="https://script.google.com/macros/s/AKfycbxf1p40kqTg6cD7M1ksqsjmBsewwQs3Z_nFL7Wqkds_A-ToHFLJGvPWQdFRXyKmqrcc-g/exec" style="display:none">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14"/>
+      <polyline points="13 5 20 12 13 19"/>
+    </svg>
+    Abrir Hub
+  </a>
+
+  <div class="foot">HSE Geriatria · IASSEPE · Pernambuco</div>
+</div>
+
+<script>
+(function () {
+  const HUB_URL = 'https://script.google.com/macros/s/AKfycbxf1p40kqTg6cD7M1ksqsjmBsewwQs3Z_nFL7Wqkds_A-ToHFLJGvPWQdFRXyKmqrcc-g/exec';
+  const status  = document.getElementById('status');
+  const openBtn = document.getElementById('open-btn');
+
+  function isStandalone() {
+    return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches)
+        || window.navigator.standalone === true;
+  }
+
+  // Mostra a splash brevemente, depois redireciona pro Hub.
+  // Standalone (aberto via ícone da home): redirect mais rápido.
+  const delay = isStandalone() ? 350 : 700;
+
+  setTimeout(() => {
+    try {
+      window.location.replace(HUB_URL);
+    } catch (e) {
+      status.style.display = 'none';
+      openBtn.style.display = 'inline-flex';
+    }
+  }, delay);
+
+  // Failsafe: se em 4s ainda estiver aqui, mostra botão manual
+  setTimeout(() => {
+    status.style.display = 'none';
+    openBtn.style.display = 'inline-flex';
+  }, 4000);
+})();
+</script>
+</body>
+</html>
