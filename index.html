@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Hub GERI HSE</title>
+<meta name="description" content="Acesso rápido às ferramentas da Geriatria — Hospital dos Servidores do Estado de Pernambuco">
+
+<!-- ── PWA / Standalone ── -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hub GERI">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1b5c35">
+<meta name="application-name" content="Hub GERI HSE">
+
+<!-- ── Icons ── -->
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+<link rel="manifest" href="manifest.webmanifest">
+
+<!-- ── Open Graph (preview no WhatsApp etc.) ── -->
+<meta property="og:title" content="Hub GERI HSE">
+<meta property="og:description" content="Acesso rápido às ferramentas da Geriatria — HSE/IASSEPE">
+<meta property="og:image" content="icon-512.png">
+<meta property="og:type" content="website">
+
+<style>
+:root { --forest: #1b5c35; }
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body {
+  height: 100%; width: 100%;
+  overflow: hidden;
+  background: var(--forest);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+#hub {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: 0; display: block;
+  background: var(--forest);
+}
+#splash {
+  position: fixed; inset: 0;
+  background: linear-gradient(135deg, var(--forest) 0%, #2a7a4a 60%, #235f3e 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 10;
+  transition: opacity .45s ease-out;
+  padding: 0 24px;
+  text-align: center;
+}
+#splash.hide { opacity: 0; pointer-events: none; }
+#splash img {
+  width: 96px; height: 96px;
+  border-radius: 22px;
+  box-shadow: 0 12px 34px rgba(0,0,0,.34), 0 4px 8px rgba(0,0,0,.18);
+  animation: fadeUp .55s ease-out both;
+}
+#splash h1 {
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  font-weight: normal;
+  letter-spacing: .3px;
+  margin: 22px 0 6px;
+  animation: fadeUp .55s ease-out .08s both;
+}
+#splash p {
+  color: rgba(255,255,255,.62);
+  font-size: 11.5px;
+  letter-spacing: .12em;
+  margin: 0;
+  text-transform: uppercase;
+  animation: fadeUp .55s ease-out .16s both;
+}
+.spinner {
+  margin-top: 30px;
+  width: 26px; height: 26px;
+  border: 2.5px solid rgba(255,255,255,.22);
+  border-top-color: rgba(255,255,255,.9);
+  border-radius: 50%;
+  animation: spin .9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+#fallback {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,.86);
+  color: #fff;
+  padding: 14px 18px calc(14px + env(safe-area-inset-bottom,0px));
+  font-size: 13px;
+  text-align: center;
+  display: none;
+  z-index: 20;
+}
+#fallback.show { display: block; }
+#fallback a {
+  color: #6cd194;
+  text-decoration: underline;
+  font-weight: 600;
+}
+</style>
+</head>
+<body>
+
+<div id="splash" role="status" aria-live="polite">
+  <img src="icon-192.png" alt="Hub GERI HSE">
+  <h1>Hub GERI HSE</h1>
+  <p>Hospital dos Servidores · IASSEPE</p>
+  <div class="spinner" aria-hidden="true"></div>
+</div>
+
+<iframe id="hub"
+        src="https://script.google.com/macros/s/AKfycbxf1p40kqTg6cD7M1ksqsjmBsewwQs3Z_nFL7Wqkds_A-ToHFLJGvPWQdFRXyKmqrcc-g/exec"
+        allow="clipboard-read; clipboard-write; geolocation; microphone; camera; fullscreen"
+        allowfullscreen
+        title="Hub GERI HSE"></iframe>
+
+<div id="fallback">
+  Demorou demais para carregar.
+  <a href="https://script.google.com/macros/s/AKfycbxf1p40kqTg6cD7M1ksqsjmBsewwQs3Z_nFL7Wqkds_A-ToHFLJGvPWQdFRXyKmqrcc-g/exec">
+    Abrir diretamente →
+  </a>
+</div>
+
+<script>
+(function () {
+  const splash   = document.getElementById('splash');
+  const iframe   = document.getElementById('hub');
+  const fallback = document.getElementById('fallback');
+
+  let loaded = false;
+  function hideSplash() {
+    if (loaded) return;
+    loaded = true;
+    setTimeout(() => splash.classList.add('hide'), 250);
+  }
+
+  iframe.addEventListener('load', hideSplash);
+
+  // Failsafe: se em 10s o load não disparou, esconde splash e mostra link direto
+  setTimeout(() => {
+    if (!loaded) {
+      hideSplash();
+      fallback.classList.add('show');
+    }
+  }, 10000);
+})();
+</script>
+</body>
+</html>
